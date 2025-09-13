@@ -43,7 +43,7 @@ const transaction = await createNft(umi, {
   mint: collectionMint,
   name: "SV Collection",
   symbol: "SVM",
-  uri: "https://raw.githubusercontent.com/saatvik-10/portfolio/main/portfolio/nftMetadata.json",
+  uri: "https://raw.githubusercontent.com/saatvik-10/nft-solana/main/nftMetadata.json",
   sellerFeeBasisPoints: percentAmount(0),
   isCollection: true,
 });
