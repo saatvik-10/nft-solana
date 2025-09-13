@@ -29,7 +29,7 @@ await airdropIfRequired(
 
 console.log("User loaded", user.publicKey.toBase58());
 
-const umi = createUmi(connection.rpcEndpoint);
+const umi = createUmi(clusterApiUrl("devnet"));
 umi.use(mplTokenMetadata()); //wants to talk to the mplTokenMetadata
 
 const umiUser = umi.eddsa.createKeypairFromSecretKey(user.secretKey);
