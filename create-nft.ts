@@ -48,7 +48,7 @@ const mint = generateSigner(umi);
 const transaction = await createNft(umi, {
   mint,
   name: "SV Nft",
-  uri: "https://raw.githubusercontent.com/saatvik-10/nft-solana/main/nftMetadata.json",
+  uri: "https://raw.githubusercontent.com/saatvik-10/nft-solana/main/nft.json",
   sellerFeeBasisPoints: percentAmount(0),
   collection: {
     key: collectionAddress,
