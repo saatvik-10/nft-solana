@@ -1,4 +1,3 @@
-//nfts are unique....hv their own mint address. Collection binds them together (nfts of a particular owner)
 import {
   createNft,
   fetchDigitalAsset,
@@ -14,6 +13,7 @@ import {
   generateSigner,
   keypairIdentity,
   percentAmount,
+  publicKey,
 } from "@metaplex-foundation/umi";
 import { clusterApiUrl, Connection, LAMPORTS_PER_SOL } from "@solana/web3.js";
 
@@ -37,24 +37,29 @@ umi.use(keypairIdentity(umiUser));
 
 console.log("Setting up Umi instance of user");
 
-const collectionMint = generateSigner(umi);
+const collectionAddress = publicKey(
+  "579LxQj7yGsXRU8SxetEJTJusBoE2Mg25C9SBGUXwFVT",
+);
+
+console.log("Creating NFT...");
+
+const mint = generateSigner(umi);
 
 const transaction = await createNft(umi, {
-  mint: collectionMint,
-  name: "SV Collection",
-  symbol: "SVM",
-  uri: "https://raw.githubusercontent.com/saatvik-10/nft-solana/main/nftCollectionMetadata.json",
+  mint,
+  name: "SV Nft",
+  uri: "https://raw.githubusercontent.com/saatvik-10/nft-solana/main/nftMetadata.json",
   sellerFeeBasisPoints: percentAmount(0),
-  isCollection: true,
+  collection: {
+    key: collectionAddress,
+    verified: false,
+  },
 });
 
 await transaction.sendAndConfirm(umi);
 
-const createdCollectionNft = await fetchDigitalAsset(
-  umi,
-  collectionMint.publicKey,
-);
+const createdNft = await fetchDigitalAsset(umi, mint.publicKey);
 
 console.log(
-  `Collection created at ${getExplorerLink("address", createdCollectionNft.mint.publicKey, "devnet")}`,
+  `Created NFT's address is ${getExplorerLink("address", createdNft.mint.publicKey, "devnet")}`,
 );
